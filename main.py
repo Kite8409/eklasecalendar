@@ -1,4 +1,4 @@
-from eklasescraper import eklase
+import eklasescraper.eklase
 import dotenv
 from os import getenv
 from ics import Calendar, Event
@@ -6,7 +6,9 @@ import datetime
 
 dotenv.load_dotenv()
 
-eklase = eklase.Scraper()
+print(eklasescraper.__dict__)
+
+eklase = eklasescraper.eklase.Scraper()
 
 eklase.login(getenv("USERNAME"), getenv("PASSWORD"), getenv("PROFILE_ID"), getenv("ORGANIZATION_ID"), getenv("PROFILE_INDEX"))
 
@@ -14,6 +16,8 @@ eklase.login(getenv("USERNAME"), getenv("PASSWORD"), getenv("PROFILE_ID"), geten
 now = datetime.datetime.now()
 
 diaries = []
+
+
 
 for week in range(-2, 3):
     thisweek = now + datetime.timedelta(weeks=week)
@@ -41,7 +45,7 @@ for diary in diaries:
                 end = day.timestamp + (lesson_times[lesson.index].end_timedelta * 60),
                 location = lesson.room,
                 description = "\n".join(["Subject:", lesson.subject.text, "\nHomework:", lesson.hometask.text, "\nScore:", lesson.score]),
-                uid = "_".join([str(day.timestamp), lesson.index, "@eklasecalendar"]),
+                uid = "_".join([str(day.timestamp), lesson.index, "@ekcalendar"]),
                 last_modified = now
             )
             
